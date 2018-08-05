@@ -27,7 +27,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   liblog4cpp5v5 \
   libnuma1 \
   libpcap0.8 \
-  libncurses5
+  libncurses5 \
+  ssmtp
 
 COPY --from=build /opt /opt
 

@@ -13,6 +13,11 @@ Images are tagged according to the installed *FastNetMon* version. The images ar
   This image is build using *Debian stretch* and should be considered **stable**.
 
 
+## Mail
+
+The image contains *ssmtp* to be able to send notification mails.
+
+
 ## Usage
 
 *TBD*
