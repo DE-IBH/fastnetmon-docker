@@ -1,7 +1,17 @@
 # fetch sources
 FROM debian:stretch-slim AS build
 
+ARG BUILD_DATE
+ARG VCS_REF
 ARG branch=v1.1.3
+
+LABEL org.label-schema.name="FastNetMon" \
+      org.label-schema.description="DDoS detection tool" \
+      org.label-schema.url="https://fastnetmon.com/" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.vcs-url="https://github.com/DE-IBH/fastnetmon-docker.git" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.schema-version="1.0.0-rc.1"
 
 RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates perl
 
@@ -27,7 +37,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   liblog4cpp5v5 \
   libnuma1 \
   libpcap0.8 \
-  libncurses5
+  libncurses5 \
+  ssmtp
 
 COPY --from=build /opt /opt
 
