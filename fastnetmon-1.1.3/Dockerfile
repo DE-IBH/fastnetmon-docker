@@ -15,6 +15,7 @@ FROM debian:stretch-slim
 
 ARG BUILD_DATE
 ARG VCS_REF
+ARG VCS_URL
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   libboost-atomic1.62.0 \
@@ -37,9 +38,9 @@ RUN ln -s /opt/fastnetmon/assets/etc/fastnetmon.conf /etc/fastnetmon.conf
 LABEL org.label-schema.name="FastNetMon" \
       org.label-schema.description="DDoS detection tool" \
       org.label-schema.url="https://fastnetmon.com/" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.vcs-url="https://github.com/DE-IBH/fastnetmon-docker.git" \
-      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.build-date="$BUILD_DATE" \
+      org.label-schema.vcs-url="$VCS_URL" \
+      org.label-schema.vcs-ref="$VCS_REF" \
       org.label-schema.schema-version="1.0.0-rc.1"
 
 EXPOSE 2055/udp
