@@ -1,17 +1,7 @@
 # fetch sources
 FROM debian:stretch-slim AS build
 
-ARG BUILD_DATE
-ARG VCS_REF
 ARG branch=v1.1.3
-
-LABEL org.label-schema.name="FastNetMon" \
-      org.label-schema.description="DDoS detection tool" \
-      org.label-schema.url="https://fastnetmon.com/" \
-      org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.vcs-url="https://github.com/DE-IBH/fastnetmon-docker.git" \
-      org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.schema-version="1.0.0-rc.1"
 
 RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates perl
 
@@ -22,6 +12,9 @@ RUN echo build@example.com | perl fastnetmon_install.pl --do-not-track-me
 
 # final image
 FROM debian:stretch-slim
+
+ARG BUILD_DATE
+ARG VCS_REF
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   libboost-atomic1.62.0 \
@@ -40,6 +33,14 @@ COPY --from=build /opt /opt
 ADD ./assets /opt/fastnetmon/_assets
 
 RUN ln -s /opt/fastnetmon/assets/etc/fastnetmon.conf /etc/fastnetmon.conf
+
+LABEL org.label-schema.name="FastNetMon" \
+      org.label-schema.description="DDoS detection tool" \
+      org.label-schema.url="https://fastnetmon.com/" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.vcs-url="https://github.com/DE-IBH/fastnetmon-docker.git" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.schema-version="1.0.0-rc.1"
 
 EXPOSE 2055/udp
 EXPOSE 6343/udp
